@@ -1,0 +1,42 @@
+{
+  "name": "poc-react-native-sms-manager",
+  "version": "0.0.1",
+  "description": "Proof of concept React Native SMS Manager",
+  "main": "index.js",
+  "scripts": {
+    "commit": "git-cz",
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "16.0.0-alpha.6",
+    "react-native": "0.44.0"
+  },
+  "devDependencies": {
+    "babel-jest": "20.0.1",
+    "babel-preset-react-native": "1.9.2",
+    "commitizen": "^2.9.6",
+    "jest": "20.0.1",
+    "react-test-renderer": "16.0.0-alpha.6"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joshvillahermosa/poc-react-native-sms-manager.git"
+  },
+  "keywords": [
+    "React",
+    "Native",
+    "SMS",
+    "Manager",
+    "Javascript"
+  ],
+  "author": "Joshua John Villahermosa <joshvillahermosa@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/joshvillahermosa/poc-react-native-sms-manager/issues"
+  },
+  "homepage": "https://github.com/joshvillahermosa/poc-react-native-sms-manager#readme"
+}
