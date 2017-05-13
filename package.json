@@ -16,6 +16,7 @@
     "babel-jest": "20.0.1",
     "babel-preset-react-native": "1.9.2",
     "commitizen": "^2.9.6",
+    "cz-conventional-changelog": "^2.0.0",
     "jest": "20.0.1",
     "react-test-renderer": "16.0.0-alpha.6"
   },
@@ -38,5 +39,10 @@
   "bugs": {
     "url": "https://github.com/joshvillahermosa/poc-react-native-sms-manager/issues"
   },
-  "homepage": "https://github.com/joshvillahermosa/poc-react-native-sms-manager#readme"
+  "homepage": "https://github.com/joshvillahermosa/poc-react-native-sms-manager#readme",
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  }
 }
