@@ -1,0 +1,14 @@
+[
+  {
+    "text_name": "Import Contacts",
+    "isDisabled": false
+  },
+  {
+    "text_name": "Send Text",
+    "isDisabled": true
+  },
+  {
+    "text_name": "Read Text",
+    "isDisabled": true
+  }
+]
