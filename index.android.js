@@ -21,14 +21,18 @@ import {
   Icon
 } from 'native-base'
 
+import { StackNavigator } from 'react-navigation';
+
 import NavigationButton from './src/components/navigation-button.component';
 import Header from './src/components/header.component';
 import buttonData from './src/data/navigation.data';
+import getHeaderStyles from './src/services/header.service';
+import Importer from './src/views/importer.view'; 
 
 /**
  * @todo Move into App.component as the parent app.
  */
-export default class poc extends Component {
+export default class Home extends Component {
   constructor() {
     super();
 
@@ -39,10 +43,16 @@ export default class poc extends Component {
     }
   }
 
+  /**
+   * @todo Abstract text
+   */
+  static navigationOptions = getHeaderStyles('POC React Native SMS Manager');
+
   render() {
+    const { navigate } = this.props.navigation;
     return (
       <Container>
-        <Header viewName="POC React Native SMS Manager"/>
+        {/*<Header viewName="POC React Native SMS Manager"/>*/}
         
         <Content padder>
           <Text>
@@ -51,7 +61,9 @@ export default class poc extends Component {
 
           <ListView 
             dataSource={this.state.buttons}
-            renderRow={data => <NavigationButton buttonData={data}></NavigationButton>}/>
+            renderRow={data => 
+              <NavigationButton buttonData={data} navigate={navigate}></NavigationButton>
+          }/>
 
         </Content>
       </Container>
@@ -59,4 +71,9 @@ export default class poc extends Component {
   }
 }
 
-AppRegistry.registerComponent('poc', () => poc);
+const App = StackNavigator({
+  Home: { screen: Home },
+  Importer: {screen: Importer}
+});
+
+AppRegistry.registerComponent('poc', () => App);

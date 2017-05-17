@@ -17,6 +17,8 @@ import {
 
 import { StackNavigator } from 'react-navigation';
 
+import getHeaderStyles from  './../services/header.service';
+
 export default class Importer extends Component {
   constructor() {
     super();
@@ -25,29 +27,15 @@ export default class Importer extends Component {
   /**
    * @todo Isolate headerStyle and navigation Options into it's own section.
    */
-  static navigationOptions = ({navigation}) => ({
-    title: 'Contact Importer',
-    headerTintColor: '#fff',
-    headerStyle: {
-      backgroundColor: '#428bca'
-    }
-  });
+  static navigationOptions = getHeaderStyles('Importer');
 
   render() {
     return (
       <Container>
         {/*<Header viewName="POC React Native SMS Manager"/>*/}
 
-        <Text>Sample Rout</Text>
+        <Text>Sample Route</Text>
       </Container>
     );
   }
 }
-
-/**
- * Stack Navigator
- * @todo Move into a different file
- */
-export const ImporterRoute = StackNavigator({
-  Importer: {screen: Importer}
-});
