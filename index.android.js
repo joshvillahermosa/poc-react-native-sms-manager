@@ -13,7 +13,6 @@ import {
 
 import { 
   Container,
-  Header,
   Title,
   Content,
   Footer,
@@ -23,6 +22,7 @@ import {
 } from 'native-base'
 
 import NavigationButton from './src/components/navigation-button.component';
+import Header from './src/components/header.component';
 import buttonData from './src/data/navigation.data';
 
 /**
@@ -42,11 +42,7 @@ export default class poc extends Component {
   render() {
     return (
       <Container>
-        <Header>
-          <Body>
-            <Title>POC React Native SMS Manager</Title>
-          </Body>
-        </Header>
+        <Header viewName="POC React Native SMS Manager"/>
         
         <Content padder>
           <Text>

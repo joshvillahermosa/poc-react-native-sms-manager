@@ -1,14 +1,17 @@
 [
   {
     "text_name": "Import Contacts",
-    "isDisabled": false
+    "isDisabled": false,
+    "view": "Importer"
   },
   {
     "text_name": "Send Text",
-    "isDisabled": true
+    "isDisabled": true,
+    "view": null
   },
   {
     "text_name": "Read Text",
-    "isDisabled": true
+    "isDisabled": true,
+    "view": null
   }
 ]
