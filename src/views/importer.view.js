@@ -15,8 +15,6 @@ import {
   Content
 } from 'native-base';
 
-import { StackNavigator } from 'react-navigation';
-
 import getHeaderStyles from  './../services/header.service';
 
 export default class Importer extends Component {
@@ -32,9 +30,9 @@ export default class Importer extends Component {
   render() {
     return (
       <Container>
-        {/*<Header viewName="POC React Native SMS Manager"/>*/}
-
-        <Text>Sample Route</Text>
+        <Content padder>
+          <Text>Importer route that will import contacts and list them here.</Text>
+        </Content>
       </Container>
     );
   }
