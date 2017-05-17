@@ -11,8 +11,6 @@ export default class NavigationButton extends Component {
   }
 
   render() {
-    // const { navigate } = this.props.navigation;
-
     return (
       <Button
         info
