@@ -7,7 +7,8 @@
 import React, { Component } from 'react';
 import {
   AppRegistry,
-  Text
+  Text,
+  ListView
 } from 'react-native';
 
 import { 
@@ -15,14 +16,19 @@ import {
   Content,
   Button
 } from 'native-base';
+import { getAll } from 'react-native-contacts';
 
 import getHeaderStyles from  './../services/header.service';
 
 export default class Importer extends Component {
   constructor() {
     super();
+    // Why?????
+    this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
     this.state = {
-      isClicked: 'Not yet clicked'
+      status: 'Not Init',
+      contacts: this.ds.cloneWithRows([]),
+      contactsCount: 0
     }
   }
 
@@ -30,7 +36,19 @@ export default class Importer extends Component {
    * @todo Move to a dispatcher
    */
   getContacts = () => {
-    this.setState({isClicked: 'Clicked'});
+    this.setState({status: 'Getting contacts...'});
+    getAll((err, contacts) => {
+      if(err) {
+        this.setState({status: err});
+        return;
+      }
+
+      this.setState({
+        contacts: this.ds.cloneWithRows(contacts),
+        status: 'Done!',
+        contactsCount: contacts.length
+      });
+    });
   }
 
   /**
@@ -51,7 +69,13 @@ export default class Importer extends Component {
             <Text>Import Contacts!</Text>
           </Button>
 
-          <Text>{this.state.isClicked}</Text>
+          <Text>{this.state.status}</Text>
+          <Text>{this.state.contactsCount}</Text>
+          
+          <ListView
+            dataSource={this.state.contacts}
+            renderRow={data => <Text>{data.givenName} {data.familyName}</Text>}
+          />
         </Content>
       </Container>
     );
