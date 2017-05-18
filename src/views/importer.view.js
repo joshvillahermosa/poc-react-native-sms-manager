@@ -12,7 +12,8 @@ import {
 
 import { 
   Container,
-  Content
+  Content,
+  Button
 } from 'native-base';
 
 import getHeaderStyles from  './../services/header.service';
@@ -20,6 +21,16 @@ import getHeaderStyles from  './../services/header.service';
 export default class Importer extends Component {
   constructor() {
     super();
+    this.state = {
+      isClicked: 'Not yet clicked'
+    }
+  }
+
+  /**
+   * @todo Move to a dispatcher
+   */
+  getContacts = () => {
+    this.setState({isClicked: 'Clicked'});
   }
 
   /**
@@ -32,6 +43,15 @@ export default class Importer extends Component {
       <Container>
         <Content padder>
           <Text>Importer route that will import contacts and list them here.</Text>
+
+          <Button 
+            warning
+            block
+            onPress={this.getContacts}>
+            <Text>Import Contacts!</Text>
+          </Button>
+
+          <Text>{this.state.isClicked}</Text>
         </Content>
       </Container>
     );
