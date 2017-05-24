@@ -13,3 +13,24 @@ export function addContact(contact) {
     contact
   }
 }
+
+export function addContacts(contacts) {
+  return {
+    type: ACTIONS_CONSTANTS.ADD_CONTACTS,
+    contacts
+  }
+}
+
+export function setContactCount(count) {
+  return {
+    type: ACTIONS_CONSTANTS.SET_CONTACT_COUNT,
+    count
+  }
+}
+
+export function setContactImportStatus(status) {
+  return {
+    type: ACTIONS_CONSTANTS.SET_CONTACT_IMPORT_STATUS,
+    status
+  }
+}
