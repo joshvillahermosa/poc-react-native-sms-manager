@@ -21,7 +21,6 @@ class Home extends Component {
     super();
   }
 
-
   /**
    * @todo Abstract text
    */
