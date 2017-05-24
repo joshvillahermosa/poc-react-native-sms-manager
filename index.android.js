@@ -7,7 +7,10 @@
 import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
 
-import { StackNavigator } from 'react-navigation';
+import {StackNavigator} from 'react-navigation';
+
+import {Provider} from 'react-redux';
+import store from './src/store';
 
 // Views
 import Home from './src/views/home.view';
@@ -18,4 +21,14 @@ const App = StackNavigator({
   Importer: {screen: Importer}
 });
 
-AppRegistry.registerComponent('poc', () => App);
+class Root extends Component{
+  render() {
+    return (
+      <Provider store={store}>
+        <App />
+      </Provider>
+    )
+  }
+}
+
+AppRegistry.registerComponent('poc', () => Root);

@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
 import {
   Text,
   ListView
 } from 'react-native';
+import {bindActionCreators} from 'redux'
 
 import { 
   Container,
@@ -12,17 +14,13 @@ import {
 import NavigationButton from './../components/navigation-button.component';
 import buttonData from './../data/navigation.data';
 import getHeaderStyles from './../services/header.service';
+import * as navigationActions from '../store/actions/navigation.actions';
 
-export default class Home extends Component {
+class Home extends Component {
   constructor() {
     super();
-
-    // Why?????
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      buttons: ds.cloneWithRows(buttonData),
-    }
   }
+
 
   /**
    * @todo Abstract text
@@ -31,15 +29,16 @@ export default class Home extends Component {
 
   render() {
     const { navigate } = this.props.navigation;
+
     return (
-      <Container>        
+      <Container>
         <Content padder>
           <Text>
             This is a POC (Proof of concept) for Android SMS Reader. This will read Contacts Lists, Send SMS, and Read SMS.
           </Text>
 
-          <ListView 
-            dataSource={this.state.buttons}
+          <ListView
+            dataSource={this.props.views}
             renderRow={data => 
               <NavigationButton buttonData={data} navigate={navigate}></NavigationButton>
           }/>
@@ -49,3 +48,8 @@ export default class Home extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({views: state.views});
+const mapDispatchToProps = (dispatch) => ({actions: bindActionCreators(navigationActions, dispatch)})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)
