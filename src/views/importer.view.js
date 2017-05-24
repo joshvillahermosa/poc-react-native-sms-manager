@@ -10,7 +10,8 @@ import {
   Text,
   ListView
 } from 'react-native';
-
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux'
 import { 
   Container,
   Content,
@@ -18,36 +19,28 @@ import {
 } from 'native-base';
 import { getAll } from 'react-native-contacts';
 
+import * as contactActions from '../store/actions/contacts.actions';
 import getHeaderStyles from  './../services/header.service';
 
-export default class Importer extends Component {
+export class Importer extends Component {
   constructor() {
     super();
-    // Why?????
-    this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    this.state = {
-      status: 'Not Init',
-      contacts: this.ds.cloneWithRows([]),
-      contactsCount: 0
-    }
   }
 
   /**
-   * @todo Move to a dispatcher
+   * @todo Set contants for Text
    */
   getContacts = () => {
-    this.setState({status: 'Getting contacts...'});
+    this.props.actions.setContactImportStatus('Getting contacts...');
     getAll((err, contacts) => {
       if(err) {
-        this.setState({status: err});
+        this.props.actions.setContactImportStatus(JSON.stringify(err));
         return;
       }
 
-      this.setState({
-        contacts: this.ds.cloneWithRows(contacts),
-        status: 'Done!',
-        contactsCount: contacts.length
-      });
+      this.props.actions.setContactCount(contacts.length);
+      this.props.actions.setContactImportStatus('Done!')
+      this.props.actions.addContacts(contacts);
     });
   }
 
@@ -69,11 +62,11 @@ export default class Importer extends Component {
             <Text>Import Contacts!</Text>
           </Button>
 
-          <Text>{this.state.status}</Text>
-          <Text>{this.state.contactsCount}</Text>
+          <Text>{this.props.contacts.status}</Text>
+          <Text>{this.props.contacts.count}</Text>
           
           <ListView
-            dataSource={this.state.contacts}
+            dataSource={this.props.contacts.contacts}
             renderRow={data => <Text>{data.givenName} {data.familyName}</Text>}
           />
         </Content>
@@ -81,3 +74,8 @@ export default class Importer extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({contacts: state.contacts});
+const mapDispatchToProps = (dispatch) => ({actions: bindActionCreators(contactActions, dispatch)})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Importer)
