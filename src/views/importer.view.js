@@ -15,7 +15,8 @@ import {bindActionCreators} from 'redux'
 import { 
   Container,
   Content,
-  Button
+  Button,
+  Badge
 } from 'native-base';
 import { getAll } from 'react-native-contacts';
 
@@ -25,10 +26,6 @@ import * as contactActions from '../store/actions/contacts.actions';
 import getHeaderStyles from  './../services/header.service';
 
 export class Importer extends Component {
-  constructor() {
-    super();
-  }
-
   /**
    * @todo Set contants for Text
    */
@@ -55,7 +52,7 @@ export class Importer extends Component {
     return (
       <Container>
         <Content padder>
-          <Text>Importer route that will import contacts and list them here.</Text>
+          <Text style={{paddingTop: 5, paddingBottom: 5}}>Importer route that will import contacts and list them here.</Text>
 
           <Button 
             warning
@@ -64,8 +61,11 @@ export class Importer extends Component {
             <Text>Import Contacts!</Text>
           </Button>
 
-          <Text>{this.props.contacts.status}</Text>
-          <Text>{this.props.contacts.count}</Text>
+          <Text style={{paddingTop: 5, paddingBottom: 5}}>Status: {this.props.contacts.status}</Text>
+
+          <Badge primary>
+            <Text style={{color: '#fff'}}>{this.props.contacts.count}</Text>
+          </Badge>
           
           <ListView
             dataSource={this.props.contacts.contacts}
