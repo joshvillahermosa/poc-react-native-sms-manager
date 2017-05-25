@@ -15,7 +15,7 @@ This section will need to be research on how to make this process better.
 ## Contributing
 For anyone that sees something different
 
-1. Branch of master (Might be in active branch, will base off soon as store is implemented)
+1. Branch of master
 1. Make changes
 1. Run `npm run commit` and fill in fields
 1. When done, create a PR
