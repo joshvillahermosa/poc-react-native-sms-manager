@@ -19,6 +19,8 @@ import {
 } from 'native-base';
 import { getAll } from 'react-native-contacts';
 
+import ContactListCard from '../components/contact-list-card.component';
+
 import * as contactActions from '../store/actions/contacts.actions';
 import getHeaderStyles from  './../services/header.service';
 
@@ -67,7 +69,7 @@ export class Importer extends Component {
           
           <ListView
             dataSource={this.props.contacts.contacts}
-            renderRow={data => <Text>{data.givenName} {data.familyName}</Text>}
+            renderRow={data => <ContactListCard contact={data}></ContactListCard>}
           />
         </Content>
       </Container>
