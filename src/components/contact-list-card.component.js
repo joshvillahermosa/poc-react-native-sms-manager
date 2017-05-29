@@ -4,7 +4,8 @@ import {
   Body,
   Card,
   CardItem,
-  
+  Right,
+  Icon
 } from 'native-base';
 
 const styles = {
@@ -43,8 +44,12 @@ export default class ContactListCard extends Component {
           </Text>
         </CardItem>
 
-        <CardItem style={styles.contactNumber}>
+        <CardItem button style={styles.contactNumber}>
           <Text>{this.getPhoneNumber(this.props.contact)}</Text>
+
+          <Right>
+            <Icon onPress={() => this.props.navigate('Contact', {contactId: this.props.contact.recordID})} name="arrow-with-circle-right" />
+          </Right>
         </CardItem>
       </Card>
     )
