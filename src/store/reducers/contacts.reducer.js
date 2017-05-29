@@ -9,9 +9,12 @@ const initialContacts = dataSource.cloneWithRows([]);
  */
 
 const defaultState = {
-  contacts: initialContacts,
+  contactRows: initialContacts,
+  contacts: [],
   count: 0,
-  status: 'Not initialized'
+  status: 'Not initialized',
+  viewingContact: null,
+  viewingContactDetails: null
 }
 
 export default function contactsReducer(state = defaultState, action) {
@@ -24,6 +27,8 @@ export default function contactsReducer(state = defaultState, action) {
       return setContactCount(state, action);
     case ACTION_CONSTANTS.SET_CONTACT_IMPORT_STATUS:
       return setContactImportStatus(state, action);
+    case ACTION_CONSTANTS.SET_VIEWING_CONTACT_BY_ID:
+      return setViewingContactById(state, action);
   }
 
   return state;
@@ -35,7 +40,11 @@ function addContact(state, action) {
 }
 
 function addContacts(state, action) {
-  return Object.assign({}, state, {contacts: dataSource.cloneWithRows(action.contacts)});
+  const modifiedState = {
+    contacts: action.contacts,
+    contactRows: dataSource.cloneWithRows(action.contacts)
+  };
+  return Object.assign({}, state, modifiedState);
 }
 
 function setContactCount(state, action) {
@@ -44,5 +53,45 @@ function setContactCount(state, action) {
 
 function setContactImportStatus(state, action) {
   return Object.assign({}, state, {status: action.status});
+}
+
+/**
+ * @todo Move into service 
+ * @todo Refactor
+ */
+function setViewingContactById(state, action) {
+  const viewingContact = state.contacts.find(contact => (
+    contact.recordID === action.contactId
+  ));
+
+  const viewingContactKeys = Object.keys(viewingContact);
+
+  const viewingContactDetailsRaw = viewingContactKeys.map(key => {
+
+    /**
+     * Put into text util function
+     */
+    const normalizedKey = key
+      .replace(/([A-Z])/g, ' $1')
+      .replace(/^./, str => str.toUpperCase());
+
+    if (typeof viewingContact[key] !== 'string') {
+      return {
+        key: normalizedKey,
+        value: '@todo'
+      };
+    }
+
+    return {
+      key: normalizedKey,
+      value: viewingContact[key]
+    }
+  });
+
+  console.log(viewingContactDetailsRaw);
+
+  const viewingContactDetails = dataSource.cloneWithRows(viewingContactDetailsRaw);
+
+  return Object.assign({}, state, {viewingContact, viewingContactDetails});
 }
 

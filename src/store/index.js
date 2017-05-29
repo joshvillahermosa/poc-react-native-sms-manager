@@ -14,10 +14,13 @@ const initalContacts = dataSource.cloneWithRows([]);
 
 const defaultState = {
   views: initialNavigationViewState,
-  contacts: { 
-    contacts: initalContacts,
+  contacts: {
+    contacts: [],
+    contactRows: initalContacts,
     count: 0,
-    status: 'Not Initialized'
+    status: 'Not Initialized',
+    viewingContact: null,
+    viewingContactDetails: null
   }
 };
 

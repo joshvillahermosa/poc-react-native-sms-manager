@@ -49,6 +49,8 @@ export class Importer extends Component {
   static navigationOptions = getHeaderStyles('Importer');
 
   render() {
+    const { navigate } = this.props.navigation;
+
     return (
       <Container>
         <Content padder>
@@ -57,7 +59,8 @@ export class Importer extends Component {
           <Button 
             warning
             block
-            onPress={this.getContacts}>
+            onPress={this.getContacts}
+            >
             <Text>Import Contacts!</Text>
           </Button>
 
@@ -66,10 +69,10 @@ export class Importer extends Component {
           <Badge primary>
             <Text style={{color: '#fff'}}>{this.props.contacts.count}</Text>
           </Badge>
-          
+
           <ListView
-            dataSource={this.props.contacts.contacts}
-            renderRow={data => <ContactListCard contact={data}></ContactListCard>}
+            dataSource={this.props.contacts.contactRows}
+            renderRow={data => <ContactListCard contact={data} navigate={navigate}></ContactListCard>}
           />
         </Content>
       </Container>

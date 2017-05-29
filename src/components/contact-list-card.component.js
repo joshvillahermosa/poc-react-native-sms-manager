@@ -4,9 +4,12 @@ import {
   Body,
   Card,
   CardItem,
-  
+  Right,
+  Icon
 } from 'native-base';
-
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import * as contactActions from '../store/actions/contacts.actions';
 const styles = {
   bold: {
     fontWeight: 'bold'
@@ -21,7 +24,7 @@ const styles = {
   }
 }
 
-export default class ContactListCard extends Component {
+export class ContactListCard extends Component {
 
   /**
    * @todo Move into service
@@ -34,6 +37,12 @@ export default class ContactListCard extends Component {
     return contact.phoneNumbers[0].number;
   }
 
+  navigateToContact = (contactId) => {
+    alert(`Contact: ${contactId}`);
+    this.props.actions.setViewingContactById(contactId);
+    this.props.navigate('Contact');
+  }
+
   render() {
     return (
       <Card>
@@ -43,10 +52,19 @@ export default class ContactListCard extends Component {
           </Text>
         </CardItem>
 
-        <CardItem style={styles.contactNumber}>
+        <CardItem button style={styles.contactNumber}>
           <Text>{this.getPhoneNumber(this.props.contact)}</Text>
+
+          <Right>
+            <Text onPress={() => this.navigateToContact(this.props.contact.recordID)}>
+              -->
+            </Text>
+          </Right>
         </CardItem>
       </Card>
     )
   }
 }
+
+const mapDispatchToProps = (dispatch) => ({actions: bindActionCreators(contactActions, dispatch)})
+export default connect(undefined, mapDispatchToProps)(ContactListCard)

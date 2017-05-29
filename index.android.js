@@ -12,20 +12,17 @@ import {StackNavigator} from 'react-navigation';
 import {Provider} from 'react-redux';
 import store from './src/store';
 
+import AppNavigator from './src/router/app.router';
+
 // Views
 import Home from './src/views/home.view';
 import Importer from './src/views/importer.view'; 
-
-const App = StackNavigator({
-  Home: { screen: Home },
-  Importer: {screen: Importer}
-});
 
 class Root extends Component{
   render() {
     return (
       <Provider store={store}>
-        <App />
+        <AppNavigator />
       </Provider>
     )
   }
