@@ -71,7 +71,7 @@ export class Importer extends Component {
           </Badge>
 
           <ListView
-            dataSource={this.props.contacts.contacts}
+            dataSource={this.props.contacts.contactRows}
             renderRow={data => <ContactListCard contact={data} navigate={navigate}></ContactListCard>}
           />
         </Content>

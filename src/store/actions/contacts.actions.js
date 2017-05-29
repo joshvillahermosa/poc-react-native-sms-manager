@@ -34,3 +34,10 @@ export function setContactImportStatus(status) {
     status
   }
 }
+
+export function setViewingContact(contactId) {
+  return {
+    type: ACTIONS_CONSTANTS.SET_VIEWING_CONTACT,
+    contactId
+  }
+}

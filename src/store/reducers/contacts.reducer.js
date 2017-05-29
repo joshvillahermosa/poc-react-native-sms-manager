@@ -11,7 +11,8 @@ const initialContacts = dataSource.cloneWithRows([]);
 const defaultState = {
   contacts: initialContacts,
   count: 0,
-  status: 'Not initialized'
+  status: 'Not initialized',
+  viewingContactId: null
 }
 
 export default function contactsReducer(state = defaultState, action) {
@@ -24,6 +25,8 @@ export default function contactsReducer(state = defaultState, action) {
       return setContactCount(state, action);
     case ACTION_CONSTANTS.SET_CONTACT_IMPORT_STATUS:
       return setContactImportStatus(state, action);
+    case ACTION_CONSTANTS.SET_VIEWING_CONTACT_ID:
+      return setViewingContactId(state, action);
   }
 
   return state;
@@ -35,7 +38,11 @@ function addContact(state, action) {
 }
 
 function addContacts(state, action) {
-  return Object.assign({}, state, {contacts: dataSource.cloneWithRows(action.contacts)});
+  const modifiedState = {
+    contacts: action.contacts,
+    contactRows: dataSource.cloneWithRows(action.contacts)
+  };
+  return Object.assign({}, state, modifiedState);
 }
 
 function setContactCount(state, action) {
@@ -44,5 +51,9 @@ function setContactCount(state, action) {
 
 function setContactImportStatus(state, action) {
   return Object.assign({}, state, {status: action.status});
+}
+
+function setViewingContact(state, action) {
+  return Object.assign({}, state, {viewingContactId: action.contactId});
 }
 
