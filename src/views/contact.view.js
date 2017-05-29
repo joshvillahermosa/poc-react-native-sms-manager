@@ -4,16 +4,17 @@ import {
   Text
 } from 'react-native';
 import {bindActionCreators} from 'redux'
-
 import { 
   Container,
-  Content
+  Content,
+  Card,
+  CardItem
 } from 'native-base'
 
 import getHeaderStyles from './../services/header.service';
 import * as navigationActions from '../store/actions/navigation.actions';
 
-export default class Contact extends Component {
+export class Contact extends Component {
   constructor() {
     super();
   }
@@ -23,18 +24,36 @@ export default class Contact extends Component {
    */
   static navigationOptions = getHeaderStyles('Contact: CONTACT NAME');
 
+  constructFullName =(contact) => {
+    return `${contact.givenName} ${contact.familyName}`;
+  }
+
   render() {
     const { navigate } = this.props.navigation;
-    const { params } = this.props.navigation.state
 
     return (
       <Container>
         <Content padder>
           <Text>
-            Contact View {params.contactId}
+            Contact View: {this.props.contact.recordID}
           </Text>
+
+          <Card>
+          <CardItem header>
+            <Text style={{fontWeight: 'bold'}}>
+              {this.constructFullName(this.props.contact)}
+            </Text>
+          </CardItem>
+          </Card>
         </Content>
       </Container>
     );
   }
 }
+
+/**
+ * @todo Refactor into a service... 
+ */
+const mapStateToProps = (state) => ({contact: state.contacts.viewingContact})
+
+export default connect(mapStateToProps)(Contact)

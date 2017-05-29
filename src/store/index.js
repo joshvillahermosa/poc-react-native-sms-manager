@@ -19,7 +19,7 @@ const defaultState = {
     contactRows: initalContacts,
     count: 0,
     status: 'Not Initialized',
-    viewingContactId: undefined
+    viewingContact: undefined
   }
 };
 
