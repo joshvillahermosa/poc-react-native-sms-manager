@@ -1,16 +1,20 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {
-  Text
+  Text,
+  ListView,
+  View
 } from 'react-native';
 import {bindActionCreators} from 'redux'
 import { 
   Container,
   Content,
   Card,
-  CardItem
+  CardItem,
+  List,
+  ListItem
 } from 'native-base'
-
+import STYLES from '../services/styles.constants'
 import getHeaderStyles from './../services/header.service';
 import * as navigationActions from '../store/actions/navigation.actions';
 
@@ -22,7 +26,7 @@ export class Contact extends Component {
   /**
    * @todo Abstract text
    */
-  static navigationOptions = getHeaderStyles('Contact: CONTACT NAME');
+  static navigationOptions = getHeaderStyles('Contact');
 
   constructFullName =(contact) => {
     return `${contact.givenName} ${contact.familyName}`;
@@ -34,16 +38,25 @@ export class Contact extends Component {
     return (
       <Container>
         <Content padder>
-          <Text>
-            Contact View: {this.props.contact.recordID}
-          </Text>
 
           <Card>
-          <CardItem header>
-            <Text style={{fontWeight: 'bold'}}>
-              {this.constructFullName(this.props.contact)}
-            </Text>
-          </CardItem>
+            <CardItem header>
+              <Text style={STYLES.bold}>
+                {this.constructFullName(this.props.contact)
+              }</Text>
+            </CardItem>
+
+            <CardItem>
+              <ListView
+                dataSource={this.props.contactDetails}
+                renderRow={data => 
+                  <Text>
+                    <Text style={STYLES.bold}>{data.key}: </Text>
+                    <Text>{data.value}</Text>
+                  </Text>
+                }
+              />
+            </CardItem>
           </Card>
         </Content>
       </Container>
@@ -54,6 +67,9 @@ export class Contact extends Component {
 /**
  * @todo Refactor into a service... 
  */
-const mapStateToProps = (state) => ({contact: state.contacts.viewingContact})
+const mapStateToProps = (state) => ({
+  contact: state.contacts.viewingContact,
+  contactDetails: state.contacts.viewingContactDetails
+});
 
 export default connect(mapStateToProps)(Contact)

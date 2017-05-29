@@ -13,7 +13,8 @@ const defaultState = {
   contacts: [],
   count: 0,
   status: 'Not initialized',
-  viewingContactId: null
+  viewingContact: null,
+  viewingContactDetails: null
 }
 
 export default function contactsReducer(state = defaultState, action) {
@@ -54,12 +55,43 @@ function setContactImportStatus(state, action) {
   return Object.assign({}, state, {status: action.status});
 }
 
+/**
+ * @todo Move into service 
+ * @todo Refactor
+ */
 function setViewingContactById(state, action) {
-  console.log(state.contacts)
   const viewingContact = state.contacts.find(contact => (
     contact.recordID === action.contactId
   ));
 
-  return Object.assign({}, state, {viewingContact});
+  const viewingContactKeys = Object.keys(viewingContact);
+
+  const viewingContactDetailsRaw = viewingContactKeys.map(key => {
+
+    /**
+     * Put into text util function
+     */
+    const normalizedKey = key
+      .replace(/([A-Z])/g, ' $1')
+      .replace(/^./, str => str.toUpperCase());
+
+    if (typeof viewingContact[key] !== 'string') {
+      return {
+        key: normalizedKey,
+        value: '@todo'
+      };
+    }
+
+    return {
+      key: normalizedKey,
+      value: viewingContact[key]
+    }
+  });
+
+  console.log(viewingContactDetailsRaw);
+
+  const viewingContactDetails = dataSource.cloneWithRows(viewingContactDetailsRaw);
+
+  return Object.assign({}, state, {viewingContact, viewingContactDetails});
 }
 
